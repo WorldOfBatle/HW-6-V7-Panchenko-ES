@@ -119,6 +119,17 @@ void task1()
 }
 void task2()
 {
+    // Заготовка для считывания массива
+    {
+        std::ifstream input("task2_input.txt");
+        if (!input.is_open())
+        {
+            std::cerr << "Не удалось открыть файл task2_input.txt\n";
+            return;
+        }
+
+        std::cout << "Пока не реализовано\n";
+    }
 }
 
 void task3()
