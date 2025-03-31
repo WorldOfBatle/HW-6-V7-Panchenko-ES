@@ -212,7 +212,38 @@ void task3()
         std::cout << "\n";
     }
 
-    std::cout << "Пока без перестановки.\n";
+    // Логика перестановки
+    if (n % 2 == 0)
+    {
+        // Чётное число строк
+        int row1 = (n / 2) - 1;  // "левая" средняя
+        int row2 = (n / 2);      // "правая" средняя
+
+        // Меняем строки row1 и row2
+        std::swap(matrix[row1], matrix[row2]);
+        std::cout << "\nЧётное n=" << n << ". Поменяли строки "
+            << row1 << " и " << row2 << "\n";
+    }
+    else
+    {
+        // Нечётное число строк
+        int rowMid = n / 2; // целочисленное деление
+        // Меняем строку 0 и rowMid
+        std::swap(matrix[0], matrix[rowMid]);
+        std::cout << "\nНечётное n=" << n << ". Поменяли строку 0 и "
+            << rowMid << "\n";
+    }
+
+    // Выводим результат
+    std::cout << "\nМатрица после перестановки:\n";
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+        {
+            std::cout << matrix[i][j] << " ";
+        }
+        std::cout << "\n";
+    }
 }
 
 void task4()
