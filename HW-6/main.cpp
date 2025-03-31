@@ -128,7 +128,44 @@ void task2()
             return;
         }
 
-        std::cout << "Пока не реализовано\n";
+        // Считываем n
+        int n;
+        input >> n;
+        if (!input || n <= 0)
+        {
+            std::cerr << "Некорректное значение n в task2_input.txt\n";
+            return;
+        }
+
+        // Считываем n действительных чисел
+        std::vector<double> arr(n);
+        for (int i = 0; i < n; i++)
+        {
+            input >> arr[i];
+            if (!input)
+            {
+                std::cerr << "Ошибка чтения числа №" << (i + 1) << " из файла\n";
+                return;
+            }
+        }
+
+        // Ищем первый минимальный
+        // Инициализируем minValue и minIndex начальными значениями
+        double minValue = arr[0];
+        int minIndex = 0;
+
+        for (int i = 1; i < n; i++)
+        {
+            if (arr[i] < minValue)
+            {
+                minValue = arr[i];
+                minIndex = i;
+            }
+        }
+
+        // Выводим индекс (1-базный)
+        std::cout << "Первый минимальный элемент = " << minValue
+            << ", индекс = " << (minIndex) << std::endl;
     }
 }
 
