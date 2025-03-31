@@ -395,7 +395,28 @@ void task6()
         return;
     }
 
-    std::cout << "Пока не реализовано\n";
+    // Считываем матрицу
+    std::vector<std::vector<int>> matrix(n, std::vector<int>(m));
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+        {
+            input >> matrix[i][j];
+        }
+    }
+
+    // Вывод исходной матрицы
+    std::cout << "Исходная матрица:\n";
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+        {
+            std::cout << matrix[i][j] << " ";
+        }
+        std::cout << "\n";
+    }
+
+    std::cout << "Пока без удаления столбцов.\n";
 }
 
 int main()
