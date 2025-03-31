@@ -23,5 +23,8 @@
     <Text Include="task1_input_1d.txt">
       <Filter>Файлы ресурсов</Filter>
     </Text>
+    <Text Include="task1_input_2d.txt">
+      <Filter>Файлы ресурсов</Filter>
+    </Text>
   </ItemGroup>
 </Project>

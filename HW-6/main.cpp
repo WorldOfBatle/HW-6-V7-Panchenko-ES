@@ -60,6 +60,61 @@ void task1()
     // Двумерный массив заготовка
     {
         std::cout << "[Двумерный массив]\n";
+
+        std::ifstream input2D("task1_input_2d.txt");
+        if (!input2D.is_open())
+        {
+            std::cerr << "Не удалось открыть файл task1_input_2d.txt\n";
+        }
+        else
+        {
+            int rows, cols;
+            input2D >> rows >> cols;
+            if (!input2D || rows <= 0 || cols <= 0)
+            {
+                std::cerr << "Некорректные данные для rows/cols в task1_input_2d.txt\n";
+            }
+            else
+            {
+                // Создаем двумерный массив
+                std::vector<std::vector<int>> matrix(rows, std::vector<int>(cols));
+
+                // Считываем элементы
+                for (int i = 0; i < rows; i++)
+                {
+                    for (int j = 0; j < cols; j++)
+                    {
+                        input2D >> matrix[i][j];
+                    }
+                }
+
+                // Считаем среднее отрицательных по всей матрице (как одна последовательность)
+                int negCount = 0;
+                long long sumNeg = 0;
+
+                for (int i = 0; i < rows; i++)
+                {
+                    for (int j = 0; j < cols; j++)
+                    {
+                        if (matrix[i][j] < 0)
+                        {
+                            sumNeg += matrix[i][j];
+                            negCount++;
+                        }
+                    }
+                }
+
+                if (negCount == 0)
+                {
+                    std::cout << "Нет отрицательных элементов (2D).\n";
+                }
+                else
+                {
+                    double average2D = static_cast<double>(sumNeg) / negCount;
+                    std::cout << "Среднее отрицательных (2D) = " << average2D << std::endl;
+                }
+            }
+        }
     }
 }
 void task2()
