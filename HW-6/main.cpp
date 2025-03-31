@@ -314,6 +314,17 @@ void task4()
 
 void task5()
 {
+    std::cout << "\n--- Task 5: Вставить элемент после последнего положительного (1D) ---\n";
+
+    std::ifstream input("task5_input.txt");
+    if (!input.is_open())
+    {
+        std::cerr << "Не удалось открыть файл task5_input.txt\n";
+        return;
+    }
+
+    // Пока не реализуем, только читаем n (и, возможно, сам элемент).
+    std::cout << "Пока не реализовано\n";
 }
 
 void task6()
