@@ -378,6 +378,24 @@ void task5()
 
 void task6()
 {
+    std::cout << "\n--- Task 6: Удалить столбцы, где первый элемент > последнего (2D) ---\n";
+
+    std::ifstream input("task6_input.txt");
+    if (!input.is_open())
+    {
+        std::cerr << "Не удалось открыть файл task6_input.txt\n";
+        return;
+    }
+
+    int n, m;
+    input >> n >> m;
+    if (!input || n <= 0 || m <= 0)
+    {
+        std::cerr << "Некорректные размеры n и m\n";
+        return;
+    }
+
+    std::cout << "Пока не реализовано\n";
 }
 
 int main()
