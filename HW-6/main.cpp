@@ -5,6 +5,8 @@
 
 void task1()
 {
+    std::cout << "\n--- Task 1: Среднее отрицательных (1D и 2D) ---\n";
+
     // Одномерный массив заготовка
     {
         std::cout << "[Одномерный массив]\n";
@@ -119,7 +121,8 @@ void task1()
 }
 void task2()
 {
-    // Заготовка для считывания массива
+    std::cout << "\n--- Task 2: Индекс первого минимального элемента (1D) ---\n";
+
     {
         std::ifstream input("task2_input.txt");
         if (!input.is_open())
@@ -171,7 +174,8 @@ void task2()
 
 void task3()
 {
-    // Заготовка
+    std::cout << "\n--- Task 3: Перестановка средних строк (2D) ---\n";
+
     std::ifstream input("task3_input.txt");
     if (!input.is_open())
     {
@@ -187,8 +191,28 @@ void task3()
         return;
     }
 
-    std::cout << "Файл task3_input.txt открыт, считаны n=" << n << ", m=" << m
-        << "\nПока не реализована логика перестановки строк.\n";
+    // Считываем матрицу
+    std::vector<std::vector<int>> matrix(n, std::vector<int>(m));
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+        {
+            input >> matrix[i][j];
+        }
+    }
+
+    // Выводим матрицу для проверки
+    std::cout << "Исходная матрица:\n";
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < m; j++)
+        {
+            std::cout << matrix[i][j] << " ";
+        }
+        std::cout << "\n";
+    }
+
+    std::cout << "Пока без перестановки.\n";
 }
 
 void task4()
