@@ -265,7 +265,30 @@ void task4()
         return;
     }
 
-    std::cout << "Прочитаны n=" << n << ", l=" << l << ". Пока не реализована логика.\n";
+    // Создаем двумерный массив (vector)
+    std::vector<std::vector<int>> matrix(n, std::vector<int>(l));
+
+    // Считываем элементы
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < l; j++)
+        {
+            input >> matrix[i][j];
+        }
+    }
+
+    // Выводим матрицу для проверки
+    std::cout << "Исходная матрица:\n";
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < l; j++)
+        {
+            std::cout << matrix[i][j] << " ";
+        }
+        std::cout << "\n";
+    }
+
+    std::cout << "Пока без вычисления сумм.\n";
 }
 
 void task5()
