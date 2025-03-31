@@ -248,6 +248,24 @@ void task3()
 
 void task4()
 {
+    std::cout << "\n--- Task 4: Сумма отрицательных по столбцам (2D) ---\n";
+
+    std::ifstream input("task4_input.txt");
+    if (!input.is_open())
+    {
+        std::cerr << "Не удалось открыть файл task4_input.txt\n";
+        return;
+    }
+
+    int n, l;
+    input >> n >> l;
+    if (!input || n <= 0 || l <= 0)
+    {
+        std::cerr << "Некорректные размеры n и l\n";
+        return;
+    }
+
+    std::cout << "Прочитаны n=" << n << ", l=" << l << ". Пока не реализована логика.\n";
 }
 
 void task5()
