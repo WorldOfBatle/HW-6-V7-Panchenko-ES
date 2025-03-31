@@ -288,7 +288,28 @@ void task4()
         std::cout << "\n";
     }
 
-    std::cout << "Пока без вычисления сумм.\n";
+    // Создаем массив (vector) для сумм отрицательных по каждому столбцу
+    std::vector<long long> colSum(l, 0LL);
+
+    // Для каждого столбца, суммируем отрицательные
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < l; j++)
+        {
+            if (matrix[i][j] < 0)
+            {
+                colSum[j] += matrix[i][j];
+            }
+        }
+    }
+
+    // Выводим результат
+    std::cout << "\nСумма отрицательных по столбцам:\n";
+    for (int j = 0; j < l; j++)
+    {
+        std::cout << colSum[j] << " ";
+    }
+    std::cout << std::endl;
 }
 
 void task5()
