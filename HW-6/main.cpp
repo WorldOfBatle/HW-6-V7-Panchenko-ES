@@ -163,7 +163,7 @@ void task2()
             }
         }
 
-        // Выводим индекс (1-базный)
+        // Выводим индекc
         std::cout << "Первый минимальный элемент = " << minValue
             << ", индекс = " << (minIndex) << std::endl;
     }
@@ -171,6 +171,24 @@ void task2()
 
 void task3()
 {
+    // Заготовка
+    std::ifstream input("task3_input.txt");
+    if (!input.is_open())
+    {
+        std::cerr << "Не удалось открыть файл task3_input.txt\n";
+        return;
+    }
+
+    int n, m;
+    input >> n >> m;
+    if (!input || n <= 0 || m <= 0)
+    {
+        std::cerr << "Некорректные n или m\n";
+        return;
+    }
+
+    std::cout << "Файл task3_input.txt открыт, считаны n=" << n << ", m=" << m
+        << "\nПока не реализована логика перестановки строк.\n";
 }
 
 void task4()
