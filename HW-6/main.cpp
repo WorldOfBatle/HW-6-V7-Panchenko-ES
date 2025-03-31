@@ -342,13 +342,38 @@ void task5()
     int newElem;
     input >> newElem; // не проверяем особо, что файл содержит, для упрощения
 
-    // Выводим для проверки
-    std::cout << "Исходный массив: ";
+    // Находим индекс последнего положительного
+    int posIndex = -1;
     for (int i = 0; i < n; i++)
+    {
+        if (arr[i] > 0)
+        {
+            posIndex = i;
+        }
+    }
+
+    // Вставляем элемент после posIndex (или в конец, если posIndex = -1)
+    if (posIndex == -1)
+    {
+        // Нет положительных, вставляем в конец
+        arr.push_back(newElem);
+        std::cout << "Положительных элементов нет. Вставляем в конец.\n";
+    }
+    else
+    {
+        // Вставляем после posIndex
+        // posIndex + 1 — позиция для вставки
+        arr.insert(arr.begin() + (posIndex + 1), newElem);
+        std::cout << "Вставляем после индекса " << posIndex << "\n";
+    }
+
+    // Выводим результат
+    std::cout << "Результирующий массив: ";
+    for (int i = 0; i < (int)arr.size(); i++)
     {
         std::cout << arr[i] << " ";
     }
-    std::cout << "\nНовый элемент (для вставки): " << newElem << "\n";
+    std::cout << std::endl;
 }
 
 void task6()
