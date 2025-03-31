@@ -416,7 +416,49 @@ void task6()
         std::cout << "\n";
     }
 
-    std::cout << "Пока без удаления столбцов.\n";
+    // Создаём новую матрицу, куда скопируем нужные столбцы
+    // Сначала не знаем, сколько останется столбцов, но можно создать пустой vector<vector<int>>
+    // и добавлять столбцы по мере надобности
+    std::vector<std::vector<int>> newMatrix(n);
+
+    for (int j = 0; j < m; j++)
+    {
+        // Проверяем условие: если первый элемент > последнего, столбец нужно удалить
+        if (matrix[0][j] > matrix[n - 1][j])
+        {
+            // пропускаем столбец
+            continue;
+        }
+        else
+        {
+            // копируем столбец j в newMatrix
+            for (int i = 0; i < n; i++)
+            {
+                newMatrix[i].push_back(matrix[i][j]);
+            }
+        }
+    }
+
+    // newMatrix теперь содержит столбцы, которые мы оставляем
+    // Количество столбцов в newMatrix[i] может быть меньше, чем m
+
+    // Выводим результат
+    std::cout << "\nМатрица после удаления столбцов:\n";
+    // Предположим, colCount = newMatrix[0].size() (если n>0)
+    int colCount = 0;
+    if (n > 0)
+    {
+        colCount = (int)newMatrix[0].size();
+    }
+
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < colCount; j++)
+        {
+            std::cout << newMatrix[i][j] << " ";
+        }
+        std::cout << "\n";
+    }
 }
 
 int main()
