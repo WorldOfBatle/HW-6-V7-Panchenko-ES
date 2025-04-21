@@ -1,17 +1,20 @@
 #include <iostream>
 #include <cmath>
-#include <fstream>    // для работы с файловыми потоками
-#include <vector>     // для std::vector
+#include <fstream>
+
+// Максимальные размеры для статических массивов
+constexpr size_t MAX1D = 1000;
+constexpr size_t MAX2D_ROWS = 100;
+constexpr size_t MAX2D_COLS = 100;
 
 void task1()
 {
     std::cout << "\n--- Task 1: Среднее отрицательных (1D и 2D) ---\n";
 
-    // Одномерный массив заготовка
+    // Одномерный массив
     {
         std::cout << "[Одномерный массив]\n";
 
-        // Открываем файл с данными
         std::ifstream input1D("task1_input_1d.txt");
         if (!input1D.is_open())
         {
@@ -20,21 +23,19 @@ void task1()
         else
         {
             int n;
-            input1D >> n; // считываем размер массива
-            if (!input1D || n <= 0)
+            input1D >> n;
+            if (!input1D || n <= 0 || static_cast<size_t>(n) > MAX1D)
             {
-                std::cerr << "Некорректные данные для n в файле task1_input_1d.txt\n";
+                std::cerr << "Некорректные данные для n в task1_input_1d.txt\n";
             }
             else
             {
-                // Считываем n целых чисел в массив
-                std::vector<int> arr(n);
+                int arr[MAX1D];
                 for (int i = 0; i < n; i++)
                 {
                     input1D >> arr[i];
                 }
 
-                // Считаем среднее отрицательных
                 int negativeCount = 0;
                 long long sumNeg = 0;
                 for (int i = 0; i < n; i++)
@@ -53,13 +54,13 @@ void task1()
                 else
                 {
                     double average = static_cast<double>(sumNeg) / negativeCount;
-                    std::cout << "Среднее отрицательных (1D) = " << average << std::endl;
+                    std::cout << "Среднее отрицательных (1D) = " << average << "\n";
                 }
             }
         }
     }
 
-    // Двумерный массив заготовка
+    // Двумерный массив
     {
         std::cout << "[Двумерный массив]\n";
 
@@ -72,16 +73,16 @@ void task1()
         {
             int rows, cols;
             input2D >> rows >> cols;
-            if (!input2D || rows <= 0 || cols <= 0)
+            if (!input2D
+                || rows <= 0 || cols <= 0
+                || static_cast<size_t>(rows) > MAX2D_ROWS
+                || static_cast<size_t>(cols) > MAX2D_COLS)
             {
-                std::cerr << "Некорректные данные для rows/cols в task1_input_2d.txt\n";
+                std::cerr << "Некорректные размеры матрицы в task1_input_2d.txt\n";
             }
             else
             {
-                // Создаем двумерный массив
-                std::vector<std::vector<int>> matrix(rows, std::vector<int>(cols));
-
-                // Считываем элементы
+                int matrix[MAX2D_ROWS][MAX2D_COLS];
                 for (int i = 0; i < rows; i++)
                 {
                     for (int j = 0; j < cols; j++)
@@ -90,10 +91,8 @@ void task1()
                     }
                 }
 
-                // Считаем среднее отрицательных по всей матрице (как одна последовательность)
                 int negCount = 0;
                 long long sumNeg = 0;
-
                 for (int i = 0; i < rows; i++)
                 {
                     for (int j = 0; j < cols; j++)
@@ -113,63 +112,56 @@ void task1()
                 else
                 {
                     double average2D = static_cast<double>(sumNeg) / negCount;
-                    std::cout << "Среднее отрицательных (2D) = " << average2D << std::endl;
+                    std::cout << "Среднее отрицательных (2D) = " << average2D << "\n";
                 }
             }
         }
     }
 }
+
 void task2()
 {
     std::cout << "\n--- Task 2: Индекс первого минимального элемента (1D) ---\n";
 
+    std::ifstream input("task2_input.txt");
+    if (!input.is_open())
     {
-        std::ifstream input("task2_input.txt");
-        if (!input.is_open())
-        {
-            std::cerr << "Не удалось открыть файл task2_input.txt\n";
-            return;
-        }
-
-        // Считываем n
-        int n;
-        input >> n;
-        if (!input || n <= 0)
-        {
-            std::cerr << "Некорректное значение n в task2_input.txt\n";
-            return;
-        }
-
-        // Считываем n действительных чисел
-        std::vector<double> arr(n);
-        for (int i = 0; i < n; i++)
-        {
-            input >> arr[i];
-            if (!input)
-            {
-                std::cerr << "Ошибка чтения числа №" << (i + 1) << " из файла\n";
-                return;
-            }
-        }
-
-        // Ищем первый минимальный
-        // Инициализируем minValue и minIndex начальными значениями
-        double minValue = arr[0];
-        int minIndex = 0;
-
-        for (int i = 1; i < n; i++)
-        {
-            if (arr[i] < minValue)
-            {
-                minValue = arr[i];
-                minIndex = i;
-            }
-        }
-
-        // Выводим индекc
-        std::cout << "Первый минимальный элемент = " << minValue
-            << ", индекс = " << (minIndex) << std::endl;
+        std::cerr << "Не удалось открыть файл task2_input.txt\n";
+        return;
     }
+
+    int n;
+    input >> n;
+    if (!input || n <= 0 || static_cast<size_t>(n) > MAX1D)
+    {
+        std::cerr << "Некорректное значение n в task2_input.txt\n";
+        return;
+    }
+
+    double arr[MAX1D];
+    for (int i = 0; i < n; i++)
+    {
+        input >> arr[i];
+        if (!input)
+        {
+            std::cerr << "Ошибка чтения числа №" << (i + 1) << "\n";
+            return;
+        }
+    }
+
+    double minValue = arr[0];
+    int minIndex = 0;
+    for (int i = 1; i < n; i++)
+    {
+        if (arr[i] < minValue)
+        {
+            minValue = arr[i];
+            minIndex = i;
+        }
+    }
+
+    std::cout << "Первый минимальный элемент = " << minValue
+        << ", индекс = " << minIndex << "\n";
 }
 
 void task3()
@@ -185,14 +177,16 @@ void task3()
 
     int n, m;
     input >> n >> m;
-    if (!input || n <= 0 || m <= 0)
+    if (!input
+        || n <= 0 || m <= 0
+        || static_cast<size_t>(n) > MAX2D_ROWS
+        || static_cast<size_t>(m) > MAX2D_COLS)
     {
-        std::cerr << "Некорректные n или m\n";
+        std::cerr << "Некорректные размеры матрицы в task3_input.txt\n";
         return;
     }
 
-    // Считываем матрицу
-    std::vector<std::vector<int>> matrix(n, std::vector<int>(m));
+    int matrix[MAX2D_ROWS][MAX2D_COLS];
     for (int i = 0; i < n; i++)
     {
         for (int j = 0; j < m; j++)
@@ -201,7 +195,6 @@ void task3()
         }
     }
 
-    // Выводим матрицу для проверки
     std::cout << "Исходная матрица:\n";
     for (int i = 0; i < n; i++)
     {
@@ -212,29 +205,27 @@ void task3()
         std::cout << "\n";
     }
 
-    // Логика перестановки
     if (n % 2 == 0)
     {
-        // Чётное число строк
-        int row1 = (n / 2) - 1;  // "левая" средняя
-        int row2 = (n / 2);      // "правая" средняя
-
-        // Меняем строки row1 и row2
-        std::swap(matrix[row1], matrix[row2]);
-        std::cout << "\nЧётное n=" << n << ". Поменяли строки "
-            << row1 << " и " << row2 << "\n";
+        int r1 = n / 2 - 1, r2 = n / 2;
+        for (int j = 0; j < m; j++)
+        {
+            std::swap(matrix[r1][j], matrix[r2][j]);
+        }
+        std::cout << "\nЧётное n=" << n << ": поменяли строки "
+            << r1 << " и " << r2 << "\n";
     }
     else
     {
-        // Нечётное число строк
-        int rowMid = n / 2; // целочисленное деление
-        // Меняем строку 0 и rowMid
-        std::swap(matrix[0], matrix[rowMid]);
-        std::cout << "\nНечётное n=" << n << ". Поменяли строку 0 и "
-            << rowMid << "\n";
+        int r0 = 0, rm = n / 2;
+        for (int j = 0; j < m; j++)
+        {
+            std::swap(matrix[r0][j], matrix[rm][j]);
+        }
+        std::cout << "\nНечётное n=" << n << ": поменяли строки 0 и "
+            << rm << "\n";
     }
 
-    // Выводим результат
     std::cout << "\nМатрица после перестановки:\n";
     for (int i = 0; i < n; i++)
     {
@@ -259,16 +250,16 @@ void task4()
 
     int n, l;
     input >> n >> l;
-    if (!input || n <= 0 || l <= 0)
+    if (!input
+        || n <= 0 || l <= 0
+        || static_cast<size_t>(n) > MAX2D_ROWS
+        || static_cast<size_t>(l) > MAX2D_COLS)
     {
-        std::cerr << "Некорректные размеры n и l\n";
+        std::cerr << "Некорректные размеры матрицы в task4_input.txt\n";
         return;
     }
 
-    // Создаем двумерный массив (vector)
-    std::vector<std::vector<int>> matrix(n, std::vector<int>(l));
-
-    // Считываем элементы
+    int matrix[MAX2D_ROWS][MAX2D_COLS];
     for (int i = 0; i < n; i++)
     {
         for (int j = 0; j < l; j++)
@@ -277,7 +268,6 @@ void task4()
         }
     }
 
-    // Выводим матрицу для проверки
     std::cout << "Исходная матрица:\n";
     for (int i = 0; i < n; i++)
     {
@@ -288,28 +278,25 @@ void task4()
         std::cout << "\n";
     }
 
-    // Создаем массив (vector) для сумм отрицательных по каждому столбцу
-    std::vector<long long> colSum(l, 0LL);
-
-    // Для каждого столбца, суммируем отрицательные
-    for (int i = 0; i < n; i++)
+    long long colSum[MAX2D_COLS] = { 0 };
+    // обойдём СНАЧАЛА столбцы, затем строки
+    for (int j = 0; j < l; j++)
     {
-        for (int j = 0; j < l; j++)
+        long long sum = 0;
+        for (int i = 0; i < n; i++)
         {
             if (matrix[i][j] < 0)
-            {
-                colSum[j] += matrix[i][j];
-            }
+                sum += matrix[i][j];
         }
+        colSum[j] = sum;
     }
 
-    // Выводим результат
     std::cout << "\nСумма отрицательных по столбцам:\n";
     for (int j = 0; j < l; j++)
     {
         std::cout << colSum[j] << " ";
     }
-    std::cout << std::endl;
+    std::cout << "\n";
 }
 
 void task5()
@@ -325,55 +312,57 @@ void task5()
 
     int n;
     input >> n;
-    if (!input || n < 0)
+    if (!input || n < 0 || static_cast<size_t>(n) > MAX1D)
     {
-        std::cerr << "Некорректное n\n";
+        std::cerr << "Некорректное значение n в task5_input.txt\n";
         return;
     }
 
-    // Считываем массив
-    std::vector<int> arr(n);
+    int arr[MAX1D + 1];
     for (int i = 0; i < n; i++)
     {
         input >> arr[i];
     }
-
-    // Считаем, что следующий элемент в файле — это "newElem"
     int newElem;
-    input >> newElem; // не проверяем особо, что файл содержит, для упрощения
+    input >> newElem;
 
-    // Находим индекс последнего положительного
     int posIndex = -1;
     for (int i = 0; i < n; i++)
     {
         if (arr[i] > 0)
-        {
             posIndex = i;
-        }
     }
 
-    // Вставляем элемент после posIndex (или в конец, если posIndex = -1)
-    if (posIndex == -1)
+    if (n + 1 > static_cast<int>(MAX1D + 1))
     {
-        // Нет положительных, вставляем в конец
-        arr.push_back(newElem);
-        std::cout << "Положительных элементов нет. Вставляем в конец.\n";
+        std::cerr << "Переполнение массива при вставке\n";
+        return;
+    }
+
+    if (posIndex < 0)
+    {
+        // вставляем в конец
+        arr[n++] = newElem;
+        std::cout << "Положительных нет — вставляем в конец\n";
     }
     else
     {
-        // Вставляем после posIndex
-        // posIndex + 1 — позиция для вставки
-        arr.insert(arr.begin() + (posIndex + 1), newElem);
+        // сдвигаем всё вправо
+        for (int i = n; i > posIndex + 1; i--)
+        {
+            arr[i] = arr[i - 1];
+        }
+        arr[posIndex + 1] = newElem;
+        ++n;
         std::cout << "Вставляем после индекса " << posIndex << "\n";
     }
 
-    // Выводим результат
-    std::cout << "Результирующий массив: ";
-    for (int i = 0; i < (int)arr.size(); i++)
+    std::cout << "Результат: ";
+    for (int i = 0; i < n; i++)
     {
         std::cout << arr[i] << " ";
     }
-    std::cout << std::endl;
+    std::cout << "\n";
 }
 
 void task6()
@@ -389,14 +378,16 @@ void task6()
 
     int n, m;
     input >> n >> m;
-    if (!input || n <= 0 || m <= 0)
+    if (!input
+        || n <= 0 || m <= 0
+        || static_cast<size_t>(n) > MAX2D_ROWS
+        || static_cast<size_t>(m) > MAX2D_COLS)
     {
-        std::cerr << "Некорректные размеры n и m\n";
+        std::cerr << "Некорректные размеры матрицы в task6_input.txt\n";
         return;
     }
 
-    // Считываем матрицу
-    std::vector<std::vector<int>> matrix(n, std::vector<int>(m));
+    int matrix[MAX2D_ROWS][MAX2D_COLS];
     for (int i = 0; i < n; i++)
     {
         for (int j = 0; j < m; j++)
@@ -405,7 +396,6 @@ void task6()
         }
     }
 
-    // Вывод исходной матрицы
     std::cout << "Исходная матрица:\n";
     for (int i = 0; i < n; i++)
     {
@@ -416,44 +406,26 @@ void task6()
         std::cout << "\n";
     }
 
-    // Создаём новую матрицу, куда скопируем нужные столбцы
-    // Сначала не знаем, сколько останется столбцов, но можно создать пустой vector<vector<int>>
-    // и добавлять столбцы по мере надобности
-    std::vector<std::vector<int>> newMatrix(n);
+    int newMatrix[MAX2D_ROWS][MAX2D_COLS];
+    int newM = 0;
 
     for (int j = 0; j < m; j++)
     {
-        // Проверяем условие: если первый элемент > последнего, столбец нужно удалить
-        if (matrix[0][j] > matrix[n - 1][j])
+        if (matrix[0][j] <= matrix[n - 1][j])
         {
-            // пропускаем столбец
-            continue;
-        }
-        else
-        {
-            // копируем столбец j в newMatrix
+            // копируем столбец j
             for (int i = 0; i < n; i++)
             {
-                newMatrix[i].push_back(matrix[i][j]);
+                newMatrix[i][newM] = matrix[i][j];
             }
+            ++newM;
         }
     }
 
-    // newMatrix теперь содержит столбцы, которые мы оставляем
-    // Количество столбцов в newMatrix[i] может быть меньше, чем m
-
-    // Выводим результат
     std::cout << "\nМатрица после удаления столбцов:\n";
-    // Предположим, colCount = newMatrix[0].size() (если n>0)
-    int colCount = 0;
-    if (n > 0)
-    {
-        colCount = (int)newMatrix[0].size();
-    }
-
     for (int i = 0; i < n; i++)
     {
-        for (int j = 0; j < colCount; j++)
+        for (int j = 0; j < newM; j++)
         {
             std::cout << newMatrix[i][j] << " ";
         }
@@ -469,6 +441,5 @@ int main()
     task4();
     task5();
     task6();
-
     return 0;
 }
